@@ -1,46 +1,19 @@
-import { useState } from "react"
+import ItemList from "./ItemList";
 
-const Content = () => {
-  const [name, setName] = useState('Dave')
-  const [count, setCount] = useState(0)
-  const [color, setColor] = useState('alice-blue')
-
-  function handleNameChange() {
-    const names = ['Bob', 'Dave', 'Kevin']
-    const int = Math.floor(Math.random() * 3)
-    setName(names[int])
-  }
-
-  const handleCountChange = () => {
-    setCount(count + 1)
-  }
-
-  const handleColorChange = () => {
-    const colors = ['red', 'blue', 'green', 'yellow']
-    const int = Math.floor(Math.random() * 4)
-    setColor(colors[int])
-  }
-
+const Content = ({ items, handleCheck, handleDelete }) => {
   return (
     <main>
-      <p> Name : { name }</p>
-      <p>Count : { count }</p>
-      <p>Color: 
-        <span style={
-          {backgroundColor: color, width: "20px", height: "20px", display: "inline-block"}
-        }></span>
-      </p>
-      <button onClick={handleNameChange}>
-        Change Name
-      </button>
-      <button onClick={handleCountChange}>
-        Change Count
-      </button>
-      <button onClick={handleColorChange}>
-        Change Color
-      </button>
+      {items.length ? (
+        <ItemList
+          items={items}
+          handleCheck={handleCheck}
+          handleDelete={handleDelete}
+        />
+      ) : (
+        <p style={{ marginTop: "2rem" }}>Your list is empty.</p>
+      )}
     </main>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;
