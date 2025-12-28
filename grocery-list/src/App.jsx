@@ -2,13 +2,17 @@ import Header from "./components/Header";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
 import AddItem from "./components/AddItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import SearchItem from "./components/SearchItem";
 
 function App() {
   const [items, setItems] = useState(
-    JSON.parse(localStorage.getItem("shoppingList"))
+    JSON.parse(localStorage.getItem("shoppingList")) || []
   );
   const [newItem, setNewItem] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {}, []);
 
   const handleCheck = (id) => {
     const listItems = items.map((item) => {
@@ -50,9 +54,11 @@ function App() {
         setNewItem={setNewItem}
         handleSubmit={handleSubmit}
       />
+      <SearchItem search={search} setSearch={setSearch} />
       <Content
-        items={items}
-        setItems={setItems}
+        items={items.filter((i) =>
+          i.item.toLowerCase().includes(search.toLowerCase())
+        )}
         handleCheck={handleCheck}
         handleDelete={handleDelete}
       />
